@@ -1,0 +1,2 @@
+# 算法竞赛进阶指南书籍题目
+[配套题目网址](https://www.acwing.com/problem/search/1/?csrfmiddlewaretoken=lFgTN3OZ7aYrKmiuFhpRMJFUdT195aJFRYRyPztGFCNy2g0bUB1aN1fJx1E0RyEs&search_content=%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97)，题解序号为题目序号。
