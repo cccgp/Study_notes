@@ -15,16 +15,16 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms
 #   to the ImageFolder structure
-data_dir = "NWPU-RESISC45"
+data_dir = "../data/NWPU-RESISC45-20%"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "alexnet"
+model_name = "vgg"
 
 # Number of classes in the dataset
 num_classes = 45
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 50
 
 # Number of epochs to train for
 num_epochs = 15
@@ -107,7 +107,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best val Acc: {:4f}'.format(best_acc))
+    print('Best test Acc: {:4f}'.format(best_acc))
 
     # load best model weights
     model.load_state_dict(best_model_wts)
@@ -149,7 +149,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.classifier[6].in_features
         model_ft.classifier[6] = nn.Linear(num_ftrs,num_classes)
-        input_size = 224
+        input_size = 256
 
     elif model_name == "squeezenet":
         """ Squeezenet
@@ -246,7 +246,7 @@ else:
             print("\t",name)
 
 # Observe that all parameters are being optimized
-optimizer_ft = optim.SGD(params_to_update, lr=0.01, momentum=0.9)
+optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 
 # Setup the loss fxn
 criterion = nn.CrossEntropyLoss()
