@@ -104,7 +104,7 @@ num_classes = 45
 batch_size = 128
 
 # Number of epochs to train for
-num_epochs = 30
+num_epochs = 50
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params
@@ -327,7 +327,7 @@ parameters_to_prune = (
 prune.global_unstructured(
     parameters_to_prune,
     pruning_method=prune.L1Unstructured,
-    amount=0.80,
+    amount=0.85,
 )
 
 print(

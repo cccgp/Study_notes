@@ -37,22 +37,24 @@ fc3 sparsity: 85.54%
 
 结果：0.749030
 
-2. 迭代50次
+2. 迭代100次
 prune.global_unstructured(
     parameters_to_prune,
     pruning_method=prune.L1Unstructured,
-    amount=0.83,
+    amount=0.85,
 )
-conv1 sparsity: 19.11%
-conv2 sparsity: 37.47%
-conv3 sparsity: 37.52%
-conv4 sparsity: 42.09%
-conv5 sparsity: 42.80%
-fc1 sparsity: 87.78%
-fc2 sparsity: 78.43%
-fc3 sparsity: 92.35%
+conv1 sparsity: 20.08%
+conv2 sparsity: 39.25%
+conv3 sparsity: 39.35%
+conv4 sparsity: 44.15%
+conv5 sparsity: 44.90%
+fc1 sparsity: 89.67%
+fc2 sparsity: 80.66%
+fc3 sparsity: 97.38%
+total sparsity: 85.00%
 
-结果：0.752734
+
+结果：
 '''
 
 from __future__ import print_function
@@ -86,7 +88,7 @@ num_classes = 45
 batch_size = 128
 
 # Number of epochs to train for
-num_epochs = 30
+num_epochs = 100
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params
@@ -309,7 +311,7 @@ parameters_to_prune = (
 prune.global_unstructured(
     parameters_to_prune,
     pruning_method=prune.L1Unstructured,
-    amount=0.80,
+    amount=0.85,
 )
 
 print(
@@ -414,6 +416,48 @@ print(
         / float(
             model_ft.classifier[6].weight.nelement()
             +model_ft.classifier[6].bias.nelement() 
+        )
+    )
+)
+
+print(
+    "total sparsity: {:.2f}%".format(
+        100. * float(
+            torch.sum(model_ft.classifier[4].weight == 0)
+            + torch.sum(model_ft.classifier[4].bias == 0)
+            + torch.sum(model_ft.classifier[6].weight == 0)
+            + torch.sum(model_ft.classifier[6].bias == 0)
+            + torch.sum(model_ft.classifier[1].weight == 0)
+            + torch.sum(model_ft.classifier[1].bias == 0)
+            + torch.sum(model_ft.features[10].weight == 0)
+            + torch.sum(model_ft.features[10].bias == 0)
+            + torch.sum(model_ft.features[8].weight == 0)
+            + torch.sum(model_ft.features[8].bias == 0)
+            + torch.sum(model_ft.features[6].weight == 0)
+            + torch.sum(model_ft.features[6].bias == 0)
+            + torch.sum(model_ft.features[3].weight == 0)
+            + torch.sum(model_ft.features[3].bias == 0)
+            + torch.sum(model_ft.features[0].weight == 0)
+            + torch.sum(model_ft.features[0].bias == 0)
+
+        )
+        / float(
+            model_ft.classifier[6].weight.nelement()
+            + model_ft.classifier[6].bias.nelement() 
+            + model_ft.classifier[4].weight.nelement()
+            + model_ft.classifier[4].bias.nelement()
+            + model_ft.classifier[1].weight.nelement()
+            + model_ft.classifier[1].bias.nelement()
+            + model_ft.features[10].weight.nelement()
+            + model_ft.features[10].bias.nelement()
+            + model_ft.features[8].weight.nelement()
+            + model_ft.features[8].bias.nelement()
+            + model_ft.features[6].weight.nelement() 
+            + model_ft.features[6].bias.nelement()
+            + model_ft.features[3].weight.nelement()
+            + model_ft.features[3].bias.nelement()
+            + model_ft.features[0].weight.nelement()
+            + model_ft.features[0].bias.nelement()
         )
     )
 )

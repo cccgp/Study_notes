@@ -44,7 +44,7 @@ fc1 sparsity: 92.25%
 fc2 sparsity: 63.56%
 fc3 sparsity: 59.76%
 
-结果：
+结果：0.899563
 
 '''
 
