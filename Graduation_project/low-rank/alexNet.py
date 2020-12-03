@@ -1,9 +1,7 @@
 '''
-迭代30次
-0.775591
+同src/alexNet_10%.py
+
 '''
-
-
 from __future__ import print_function
 from __future__ import division
 import torch
@@ -33,7 +31,7 @@ num_classes = 45
 batch_size = 128
 
 # Number of epochs to train for
-num_epochs = 15
+num_epochs = 30
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params
@@ -228,8 +226,6 @@ dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size
 # Detect if we have a GPU available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-if torch.cuda.device_count() > 1:
-    model_ft = nn.DataParallel(model_ft)
 # Send the model to GPU
 model_ft = model_ft.to(device)
 
@@ -259,3 +255,5 @@ criterion = nn.CrossEntropyLoss()
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+
+torch.save(model_ft, "alexNet_10%_model")

@@ -1,9 +1,7 @@
 '''
-迭代30次
-0.775591
+同src/vggNet_10%.py,用于保存训练出来的模型
+
 '''
-
-
 from __future__ import print_function
 from __future__ import division
 import torch
@@ -24,16 +22,16 @@ print("Torchvision Version: ",torchvision.__version__)
 data_dir = "../data/NWPU-RESISC45-10%"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "alexnet"
+model_name = "vgg"
 
 # Number of classes in the dataset
 num_classes = 45
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 50
 
 # Number of epochs to train for
-num_epochs = 15
+num_epochs = 35
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params
@@ -155,7 +153,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.classifier[6].in_features
         model_ft.classifier[6] = nn.Linear(num_ftrs,num_classes)
-        input_size = 224
+        input_size = 256
 
     elif model_name == "squeezenet":
         """ Squeezenet
@@ -228,8 +226,6 @@ dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size
 # Detect if we have a GPU available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-if torch.cuda.device_count() > 1:
-    model_ft = nn.DataParallel(model_ft)
 # Send the model to GPU
 model_ft = model_ft.to(device)
 
@@ -259,3 +255,5 @@ criterion = nn.CrossEntropyLoss()
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+
+torch.save(model_ft, "vgg_10%_model")
