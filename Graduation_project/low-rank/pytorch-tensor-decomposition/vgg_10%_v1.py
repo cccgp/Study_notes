@@ -1,7 +1,3 @@
-'''
-同src/vggNet_10%.py
-
-'''
 from __future__ import print_function
 from __future__ import division
 import torch

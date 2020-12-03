@@ -1,5 +1,5 @@
 '''
-同src/alexNet_10%.py
+同src/alexNet_10%.py,用于保存训练出来的模型
 
 '''
 from __future__ import print_function
