@@ -21,6 +21,7 @@ model = torch.load("../model/vgg_10%_model").cuda()
 model.eval()
 model.cpu()
 
+
 # Send the model to GPU
 
 N = len(model.features._modules.keys())
